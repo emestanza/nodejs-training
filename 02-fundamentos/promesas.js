@@ -26,6 +26,8 @@ let salarios = [{
 
 ]
 
+
+
 /**
  * 
  * @param {*} id 
