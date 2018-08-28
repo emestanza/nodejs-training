@@ -77,6 +77,15 @@ let getSalario = (empleado) => {
     });
 }
 
+
+let getInformacion = async(id) => {
+
+    let empleado = await getEmpleado(id);
+    let salario = await getSalario(empleado);
+
+}
+
+/*
 getEmpleado(1).then(empleado => { //RESPONSE
     console.log("Empleado de DB", empleado);
 
@@ -90,7 +99,7 @@ getEmpleado(1).then(empleado => { //RESPONSE
 }, (err) => { // REJECT
     console.log("ERROR =>", err);
 })
-
+*/
 
 /*
 getEmpleado(1, (err, empleado) => {
