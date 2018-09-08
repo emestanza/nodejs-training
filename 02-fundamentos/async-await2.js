@@ -31,22 +31,23 @@ let salarios = [{
  * @param {*} id 
  * @param {*} callback 
  */
-let getEmpleado = (id) => {
+let getEmpleado = async(id) => {
 
-    return new Promise((response, reject) => {
 
-        let empleadoDb = empleados.find(empleado => {
-            return empleado.id === id;
-        });
+    let empleadoDb = empleados.find(empleado => {
+        return empleado.id === id;
+    });
 
-        if (!empleadoDb) {
-            reject(`No existe un empleado con el ID ${id}`);
-        } else {
-            response(empleadoDb);
-        }
-    })
+    if (!empleadoDb) {
+        throw new Error(`No existe un empleado con el ID ${id}`);
+    } else {
+        return empleadoDb;
+    }
 
 }
+
+
+
 
 
 
@@ -56,25 +57,23 @@ let getEmpleado = (id) => {
  * @param {*} empleado 
  * @param {*} callback 
  */
-let getSalario = (empleado) => {
+let getSalario = async(empleado) => {
 
-    return new Promise((response, reject) => {
+    let salarioDb = salarios.find(salario => {
+        console.log(empleado);
+        return salario.id === empleado.id
 
-        let salarioDb = salarios.find(salario => {
-            console.log(empleado);
-            return salario.id === empleado.id
+    })
 
-        })
+    if (!salarioDb) {
+        throw new Error(`No hay salario con el ID ${id}`);
+    } else {
+        return ({
+            nombre: empleado.nombre,
+            salario: salarioDb.salario
+        });
+    }
 
-        if (!salarioDb) {
-            reject(`No hay salario con el ID ${id}`);
-        } else {
-            response({
-                nombre: empleado.nombre,
-                salario: salarioDb.salario
-            });
-        }
-    });
 }
 
 
@@ -83,7 +82,14 @@ let getInformacion = async(id) => {
     let empleado = await getEmpleado(id);
     let salario = await getSalario(empleado);
 
+    return `${salario.nombre} tiene un salario de ${salario.salario}`;
 }
+
+
+getInformacion(20)
+    .then(mensaje => console.log(mensaje))
+    .catch(err => console.log(err));
+
 
 /*
 getEmpleado(1).then(empleado => { //RESPONSE
