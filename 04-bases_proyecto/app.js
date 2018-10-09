@@ -1,13 +1,33 @@
-const fs = require('fs');
+//configuracion de comandos 
+const argv = require("./config/yargs").argv;
 
-let base = 3
-let data = "";
+//obtencion de funciones a usar
+const { crearArchivo, listar } = require("./libs/multiplicar");
 
-for (let i = 0; i <= 10; i++) {
-    data += `${base} x ${i} = ${base * i}\n`;
+//comando a ejecutar segun parametros
+let command = argv._[0];
+switch (command) {
+    case "listar":
+
+        listar(argv.base, argv.limite)
+            .then(result => {
+                console.log(result);
+            })
+            .catch(err => {
+                console.log(err);
+            });
+        break;
+
+    case "crear":
+
+        crearArchivo(argv.base, argv.limite)
+            .then(result => {
+                console.log(result);
+            })
+            .catch(err => {
+                console.log(err);
+            });
+        break;
+    default:
+        break;
 }
-
-fs.writeFile(`tabla-${base}.txt`, data, (err) => {
-    if (err) throw err;
-    console.log('The file has been saved!');
-});

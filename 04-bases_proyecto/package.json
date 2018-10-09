@@ -1,0 +1,14 @@
+{
+  "name": "04-bases_proyecto",
+  "version": "1.0.0",
+  "description": "App de línea de comandos",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Enmanuel Mestanza",
+  "license": "ISC",
+  "dependencies": {
+    "yargs": "^12.0.2"
+  }
+}
