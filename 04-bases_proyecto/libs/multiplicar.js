@@ -1,5 +1,11 @@
 const fs = require('fs');
 
+/**
+ * Función que genera un archivo .txt segun lo expuesto en los parámetros base
+ * 
+ * @param {int} base 
+ * @param {int} limite 
+ */
 let crearArchivo = (base, limite) => {
 
     return new Promise((resolve, reject) => {
@@ -7,6 +13,7 @@ let crearArchivo = (base, limite) => {
         if (!Number(base) || !Number(limite))
             reject("No es un número")
         else {
+
             let data = "";
             for (let i = 1; i <= limite; i++) {
                 data += `${base} x ${i} = ${base * i}\n`;
@@ -16,10 +23,17 @@ let crearArchivo = (base, limite) => {
                 if (err) reject(err);
                 else resolve(`tabla-${base}-${limite}.txt`);
             });
+            
         }
     })
 }
 
+/**
+ * Función que lista en consola la tabla de multiplicar según lo expuesto en los parámetros
+ * 
+ * @param {int} base 
+ * @param {int} limite 
+ */
 let listar = ((base, limite) => {
 
     return new Promise((resolve, reject) => {
@@ -27,12 +41,9 @@ let listar = ((base, limite) => {
         if (!Number(base))
             reject("No es un número")
         else {
-            let data = "";
             for (let i = 1; i <= limite; i++) {
                 console.log(`${base} x ${i} = ${base * i}`);
             }
-
-
         }
     })
 })
