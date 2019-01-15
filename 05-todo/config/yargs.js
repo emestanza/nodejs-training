@@ -14,6 +14,12 @@ const argv = require("yargs")
             alias: 'c',
             default: true
         }
+    }).
+    command("borrar", "Borra una tarea", {
+        descripcion: {
+            demand: true,
+            alias: 'd'
+        }
     })
     .help()
     .argv

@@ -27,13 +27,64 @@ const guardar = () =>{
 
 }
 
+const getListado = () =>{
+    cargarDb();
+
+    return listadoTodo;
+
+}
+
+const actualizar = (descripcion, completado=true) =>{
+
+    cargarDb();
+    
+    let index = listadoTodo.findIndex(tarea => {
+
+        return tarea.descripcion === descripcion;
+
+    })
+
+
+    if (index >= 0){
+        listadoTodo[index].completado = completado;
+        guardar();
+        return true;
+    }
+    else return false;
+
+}
+
+const borrar = (descripcion) =>{
+
+    cargarDb();
+
+    listadoTodo = listadoTodo.filter(function(value, index, arr){
+        return value.descripcion !==  descripcion;
+    });
+
+    guardar();
+    return true;
+    
+
+}
+
 
 const cargarDb =  () => {
-    listadoTodo = require("../db/db.json");
+
+    try {
+        listadoTodo = require("../db/db.json");
+    } catch (error) {
+        listadoTodo =[];
+    }
+
+    
 }
 
 module.exports = {
     crear,
     guardar,
-    cargarDb
+    cargarDb,
+    getListado,
+    actualizar,
+    borrar
 }
