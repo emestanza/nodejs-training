@@ -13,6 +13,8 @@ const Usuario = require("../models/usuario");
 const { verificaToken, verificaAdmin_Role } = require('../middlewares/autenticacion');
 
 app.get("/usuario", verificaToken, (req, res) => {
+
+    //req.query viene siendo el queryString
     let desde = req.query.desde || 0;
     desde = Number(desde);
 
@@ -46,7 +48,7 @@ app.post("/usuario", [verificaToken, verificaAdmin_Role], function(req, res) {
     let usuario = new Usuario({
         nombre: body.nombre,
         email: body.email,
-        password: bcrypt.hashSync(body.password, 10),
+        password: bcrypt.hashSync(body.password, 10), // encripta el password
         role: body.role
     });
 
@@ -67,13 +69,15 @@ app.post("/usuario", [verificaToken, verificaAdmin_Role], function(req, res) {
 
 app.put("/usuario/:id", [verificaToken, verificaAdmin_Role], function(req, res) {
     let id = req.params.id;
+
+    //usa metodo _.píck para obtener del body solo aquellos campos que se desean actualizar
+    //los demás serán omitidos
     let body = _.pick(req.body, ["nombre", "email", "role", "estado"]);
 
-    console.log(body);
     Usuario.findByIdAndUpdate(
         id,
         body,
-        { new: true, runValidators: true },
+        { new: true, runValidators: true }, // new retorna el objeto actualizado, runValidators hace que se corran los validadores establecidos
         (err, usuarioDB) => {
             if (err) {
                 return res.status(400).json({
@@ -92,9 +96,6 @@ app.put("/usuario/:id", [verificaToken, verificaAdmin_Role], function(req, res) 
 
 app.delete("/usuario/:id", [verificaToken, verificaAdmin_Role], function(req, res) {
     let id = req.params.id;
-
-    // Usuario.findByIdAndRemove(id, (err, usuarioBorrado) => {
-
     let cambiaEstado = {
         estado: false
     };
